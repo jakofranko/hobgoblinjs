@@ -1,0 +1,25 @@
+{
+  "name": "hobgoblin",
+  "homepage": "https://github.com/jakofranko/hobgoblinjs",
+  "authors": [
+    "Jake Franklin <jakofranko@gmail.com>"
+  ],
+  "description": "A JavaScript framework for ROT.js for creating Roguelike games in the browser",
+  "main": "hobgoblin.js",
+  "moduleType": [],
+  "keywords": [
+    "roguelike",
+    "rot.js"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "rot.js": "^0.5.0"
+  }
+}
