@@ -30,5 +30,8 @@
   "bugs": {
     "url": "https://github.com/jakofranko/hobgoblinjs/issues"
   },
-  "homepage": "https://github.com/jakofranko/hobgoblinjs#readme"
+  "homepage": "https://github.com/jakofranko/hobgoblinjs#readme",
+  "dependencies": {
+    "commander": "^2.9.0"
+  }
 }
