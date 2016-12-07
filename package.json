@@ -1,0 +1,34 @@
+{
+  "name": "hobgoblin",
+  "version": "1.0.0",
+  "description": "A framework for writing roguelike games in JavaScript, implementing ROT.js",
+  "main": "index.js",
+  "directories": {
+    "example": "examples"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jakofranko/hobgoblinjs.git"
+  },
+  "keywords": [
+    "roguelike",
+    "ROT.js",
+    "rot",
+    "ascii",
+    "dungeon",
+    "game",
+    "dev",
+    "games",
+    "game",
+    "framework"
+  ],
+  "author": "Jake Franklin <jacob.d.franklin@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jakofranko/hobgoblinjs/issues"
+  },
+  "homepage": "https://github.com/jakofranko/hobgoblinjs#readme"
+}
