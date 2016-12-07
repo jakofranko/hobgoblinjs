@@ -1,0 +1,17 @@
+#!/usr/bin/env node
+'use strict';
+
+// https://medium.freecodecamp.com/writing-command-line-applications-in-nodejs-2cf8327eee2#.196im2niz
+// https://www.npmjs.com/package/commander
+
+const program = require('commander');
+
+program
+	.version('1.0.0')
+	.command('init')
+	.description('Initialize framework in current directory')
+	.option('-e, --with-examples', 'Pull in all example files')
+	.action(function(req, optional) {
+		console.log('This is a test');
+	})
+	.parse(process.argv);
