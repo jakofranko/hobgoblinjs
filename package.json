@@ -5,7 +5,7 @@
   "main": "hobgoblin.js",
   "bin": {
     "hobgoblin": "./hobgoblin.js"
-  }
+  },
   "directories": {
     "example": "examples"
   },
