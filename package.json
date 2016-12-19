@@ -2,7 +2,10 @@
   "name": "hobgoblin",
   "version": "1.0.0",
   "description": "A framework for writing roguelike games in JavaScript, implementing ROT.js",
-  "main": "index.js",
+  "main": "hobgoblin.js",
+  "bin": {
+    "hobgoblin": "./hobgoblin.js"
+  }
   "directories": {
     "example": "examples"
   },
