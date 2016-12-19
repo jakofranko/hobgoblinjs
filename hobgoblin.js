@@ -22,7 +22,7 @@ program
 		// Copy over the main files
 		let contents = fs.readdirSync(srcDir);
 		let curDir = fs.readdirSync('./');
-		let htmlFiles;
+		let jsFiles;
 		for (var i = 0; i < contents.length; i++) {
 			if(curDir.indexOf(contents[i]) > -1) {
 				console.log(contents[i] + ' already exists. Skipping...');
@@ -45,7 +45,7 @@ program
 			}
 		}
 
-		htmlFiles = contents.slice();
+		jsFiles = contents.slice();
 
 		// Copy examples, if specified
 		if(options.examples) {
@@ -71,13 +71,13 @@ program
 					});
 				}
 			}
-			htmlFiles.concat(exampleFiles);
+			jsFiles.concat(exampleFiles);
 		}
 
 		if(fs.existsSync('index.html'))
 			console.log("index.html already exists. Skipping...");
 		else
-			fs.writeFile('index.html', generateIndexHTML(), (err) => {
+			fs.writeFile('index.html', generateIndexHTML(jsFiles), (err) => {
 				if(err) console.error(err);
 				else console.log("done!");
 			});
