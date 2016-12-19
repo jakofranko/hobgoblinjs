@@ -12,7 +12,6 @@ const program = require('commander'),
 var hobgoblinDir = p.dirname(require.main.filename);
 var srcDir = hobgoblinDir + '/src/';
 var exampleDir = hobgoblinDir + '/examples/';
-console.log(hobgoblinDir);
 
 program
 	.version('1.0.0')
@@ -20,6 +19,7 @@ program
 	.description('Initialize framework in current directory')
 	.option('-e, --examples', 'Pull in all example files')
 	.action(function(options) {
+		// Copy over the main files
 		let contents = fs.readdirSync(srcDir);
 		let curDir = fs.readdirSync('./');
 		for (var i = 0; i < contents.length; i++) {
@@ -44,6 +44,9 @@ program
 			}
 		}
 
+		htmlFiles = contents.slice();
+
+		// Copy examples, if specified
 		if(options.examples) {
 			let exampleFiles = fs.readdirSync(exampleDir);
 			for (var i = 0; i < exampleFiles.length; i++) {
@@ -67,7 +70,33 @@ program
 					});
 				}
 			}
+			htmlFiles.concat(exampleFiles);
 		}
+
+		if(fs.existsSync('index.html'))
+			console.log("index.html already exists. Skipping...");
+		else
+			fs.writeFile('index.html', generateIndexHTML(), (err) => {
+				if(err) console.error(err);
+				else console.log("done!");
+			});
 	});
+
+function generateIndexHTML(jsFiles) {
+	var html = '<!DOCTYPE html>\n';
+		html += '<html lang="en">\n';
+		html += '<head>\n';
+		html += '  <meta charset="UTF-8">\n';
+		html += '  <title>[Your Game] - A Roguelike</title>\n';
+		html += '  <link rel="stylesheet" href="css/style.css">\n';
+		for (var i = 0; i < jsFiles.length; i++) {
+			html += '<script src="' + jsFiles[i] + '" type="text/javascript"></script>\n';
+		}
+		html += '</head>\n';
+		html += '<body></body>\n';
+		html += '</html>';
+
+	return html;
+}
 
 program.parse(process.argv);
