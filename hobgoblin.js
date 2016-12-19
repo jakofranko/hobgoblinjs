@@ -22,6 +22,7 @@ program
 		// Copy over the main files
 		let contents = fs.readdirSync(srcDir);
 		let curDir = fs.readdirSync('./');
+		let htmlFiles;
 		for (var i = 0; i < contents.length; i++) {
 			if(curDir.indexOf(contents[i]) > -1) {
 				console.log(contents[i] + ' already exists. Skipping...');
