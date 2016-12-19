@@ -29,7 +29,7 @@ program
 				let filePath = srcDir + contents[i];
 				let readStream = fs.createReadStream(filePath);
 				let newFile = fs.createWriteStream(contents[i]);
-				console.log('Writing file ' + exampleFiles[i] + '...');
+				console.log('Writing file ' + contents[i] + '...');
 				readStream.on('data', (chunk) => {
 					newFile.write(chunk);
 				});
