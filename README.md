@@ -25,6 +25,8 @@ Open up index.html in your browser, and you should see an `@` symbol in an empty
 * Include game.js
 * dir structure
 * index.html with js file refs included
+* add css file (?)
+* Add option to install ROT.js via Bower
 * Update example directory to include latest examples
 * Publish to npm
 * Update to use require, cleanup index.html
