@@ -19,23 +19,26 @@ program
 	.description('Initialize framework in current directory')
 	.option('-e, --examples', 'Pull in all example files')
 	.action(function(options) {
+		// If the js dir doesn't exist, create it
+		if(!fs.existsSync('js/'))
+			fs.mkdir('js');
+
 		// Copy over the main files
 		let contents = fs.readdirSync(srcDir);
-		let curDir = fs.readdirSync('./');
+		let jsDir = fs.readdirSync('js');
 		let jsFiles;
 		for (var i = 0; i < contents.length; i++) {
-			if(curDir.indexOf(contents[i]) > -1) {
+			if(jsDir.indexOf(contents[i]) > -1) {
 				console.log(contents[i] + ' already exists. Skipping...');
 			} else {
 				let filePath = srcDir + contents[i];
 				let readStream = fs.createReadStream(filePath);
-				let newFile = fs.createWriteStream(contents[i]);
+				let newFile = fs.createWriteStream('js/' + contents[i]);
 				console.log('Writing file ' + contents[i] + '...');
 				readStream.on('data', (chunk) => {
 					newFile.write(chunk);
 				});
 				readStream.on('end', () => {
-					console.log('done');
 					newFile.end();
 				});
 				readStream.on('error', (err) => {
@@ -45,24 +48,24 @@ program
 			}
 		}
 
-		jsFiles = contents.slice();
-
 		// Copy examples, if specified
 		if(options.examples) {
-			let exampleFiles = fs.readdirSync(exampleDir);
+			let examples = fs.readdirSync(exampleDir);
+			let exampleFiles = examples.map((file) => {
+				return 'example-' + file;
+			});
 			for (var i = 0; i < exampleFiles.length; i++) {
-				if(curDir.indexOf(exampleFiles[i]) > -1) {
+				if(jsDir.indexOf(exampleFiles[i]) > -1) {
 					console.log(exampleFiles[i] + ' already exists. Skipping...');
 				} else {
-					let filePath = exampleDir + exampleFiles[i];
+					let filePath = exampleDir + examples[i]; // read from unmodified file name
 					let readStream = fs.createReadStream(filePath);
-					let newFile = fs.createWriteStream('example-' + exampleFiles[i]);
+					let newFile = fs.createWriteStream('js/' + exampleFiles[i]);
 					console.log('Writing file ' + exampleFiles[i] + '...');
 					readStream.on('data', (chunk) => {
 						newFile.write(chunk);
 					});
 					readStream.on('end', () => {
-						console.log('done');
 						newFile.end();
 					});
 					readStream.on('error', (err) => {
@@ -71,7 +74,7 @@ program
 					});
 				}
 			}
-			jsFiles.concat(exampleFiles);
+			jsFiles = contents.concat(exampleFiles);
 		}
 
 		if(fs.existsSync('index.html'))
@@ -87,11 +90,11 @@ function generateIndexHTML(jsFiles) {
 	var html = '<!DOCTYPE html>\n';
 		html += '<html lang="en">\n';
 		html += '<head>\n';
-		html += '  <meta charset="UTF-8">\n';
-		html += '  <title>[Your Game] - A Roguelike</title>\n';
-		html += '  <link rel="stylesheet" href="css/style.css">\n';
+		html += '\t<meta charset="UTF-8">\n';
+		html += '\t<title>[Your Game] - A Roguelike</title>\n';
+		html += '\t<link rel="stylesheet" href="css/style.css">\n';
 		for (var i = 0; i < jsFiles.length; i++) {
-			html += '<script src="' + jsFiles[i] + '" type="text/javascript"></script>\n';
+			html += '\t<script src="js/' + jsFiles[i] + '" type="text/javascript"></script>\n';
 		}
 		html += '</head>\n';
 		html += '<body></body>\n';
