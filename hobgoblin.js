@@ -6,6 +6,7 @@
 // https://developer.atlassian.com/blog/2015/11/scripting-with-node/
 
 const program = require('commander'),
+	  chalk = require('chalk'),
 	  fs = require('fs'),
 	  p = require('path');
 
@@ -29,7 +30,7 @@ program
 		let jsFiles;
 		for (var i = 0; i < contents.length; i++) {
 			if(jsDir.indexOf(contents[i]) > -1) {
-				console.log(contents[i] + ' already exists. Skipping...');
+				chalk.blue(contents[i] + ' already exists. Skipping...');
 			} else {
 				let filePath = srcDir + contents[i];
 				let readStream = fs.createReadStream(filePath);
@@ -56,7 +57,7 @@ program
 			});
 			for (var i = 0; i < exampleFiles.length; i++) {
 				if(jsDir.indexOf(exampleFiles[i]) > -1) {
-					console.log(exampleFiles[i] + ' already exists. Skipping...');
+					chalk.blue(exampleFiles[i] + ' already exists. Skipping...');
 				} else {
 					let filePath = exampleDir + examples[i]; // read from unmodified file name
 					let readStream = fs.createReadStream(filePath);
@@ -78,11 +79,11 @@ program
 		}
 
 		if(fs.existsSync('index.html'))
-			console.log("index.html already exists. Skipping...");
+			chalk.blue("index.html already exists. Skipping...");
 		else
 			fs.writeFile('index.html', generateIndexHTML(jsFiles), (err) => {
 				if(err) console.error(err);
-				else console.log("done!");
+				else chalk.bold.green("done!");
 			});
 	});
 
