@@ -23,6 +23,8 @@ index.html
 
 ### Important!
 
+Hobgoblin does not currently install ROT.js for you, but it is required for the framework to run. You can get it from [Ondras's repo directly](http://ondras.github.io/rot.js/hp/) or via Bower: `bower install --save rot.js`.
+
 If using examples, you MUST comment out `example-tiles.js` in `index.html` or else it will overwrite the existing `Game.TileRepository` and break. Besides this however, when using examples, a fully explorable, multi-tiered dungeon will be available upon browsing to `index.html`.
 
 Without examples, you will need to implement at least one screen and update `game.js` to reference this screen instead of `Game.Screen.startScreen`. This will include things like handling input, but you should be able to leverage the generic implementation of `map.js` to create levels very easily. I would highly recommend using `hobgoblin init --examples` in order to see one way this can be done.
