@@ -8,13 +8,18 @@ Run `npm install --save-dev hobgoblin`
 
 ## Usage
 
-`hobgoblin init` from the root of your directory will initialize the framework, and you should end up with the following directory structure:
+`hobgoblin init` from the root of your project will initialize the framework, and you should end up with the following directory structure:
 
-[insert diagram]
+```
+js/
+index.html
+```
 
-Open up index.html in your browser, and you should see an `@` symbol in an empty `Arena` map.
+`hobgoblin init --examples` will pull down example implementations of entities, tiles, screens, and items.
 
-`hobgoblin examples <items|entities|tiles>` will pull down two example JS files for the appropriate object: a `*.examples.js` file and a `*-mixins.examples.js` where * is the argument passed to `hobgoblin examples`. These example files are full of common roguelike fantasy tropes that you can pull directly in to your project, or use as a baseline for your own game.
+### Important!
+
+Without examples, you will need to implement `Game.Screen.startScreen` or change this reference in `game.js` in order for to begin the framework. I would recommend using `hobgoblin init --examples` in order to see one way this can be done.
 
 ## Hobgoblin Framework
 
@@ -22,9 +27,6 @@ Open up index.html in your browser, and you should see an `@` symbol in an empty
 
 ## TODOs
 
-* Include game.js
-* dir structure
-* index.html with js file refs included
 * add css file (?)
 * Add option to install ROT.js via Bower
 * Update example directory to include latest examples
