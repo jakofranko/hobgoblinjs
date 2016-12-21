@@ -14,15 +14,10 @@ Game.Map = function(tiles, generateEntities, generateItems, player) {
 
     // Create a table which will hold the items
     this._items = {};
-    generateItems();
 
     // Create the engine and scheduler
     this._scheduler = new ROT.Scheduler.Speed();
     this._engine = new ROT.Engine(this._scheduler);
-
-    // Create a time object
-    this._time = new Game.Time();
-    this.schedule(this._time);
 
     // Setup the explored array
     this._explored = new Array(this._depth);
@@ -30,10 +25,9 @@ Game.Map = function(tiles, generateEntities, generateItems, player) {
 
     // Create a table which will hold the entities
     this._entities = {};
-    generateEntities();
+    // Add monsters here
 
     // Add the Player
-    this._player = player;
     this.addEntityAtRandomPosition(player, 0);
 };
 
@@ -83,17 +77,6 @@ Game.Map.prototype.addEntity = function(entity) {
 	if(entity.hasMixin('Actor')) {
 		this._scheduler.add(entity, true);
 	}
-
-    // If the entity is a criminal, update the city's justice system
-    if(entity.hasMixin('JobActor')) {
-        var jobs = entity.getJobs();
-        for (var i = 0; i < jobs.length; i++) {
-            if(Game.Jobs[jobs[i]].crime) {
-                this.getJustice().addCriminals(1);
-                break;
-            }
-        }
-    }
 
     // If the entity is the player, set the player.
     if (entity.hasMixin(Game.EntityMixins.PlayerActor)) {

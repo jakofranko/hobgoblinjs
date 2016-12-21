@@ -1,8 +1,3 @@
-// Tutorial reference: http://www.codingcookies.com/2013/04/03/building-a-roguelike-in-javascript-part-2/
-// TODO: Build a 'fromTemplate' function to parse files or a logo or something like that
-// TODO: Flesh out startScreen to be more of a menu, flipping between current items etc.
-Game.Screen = {};
-
 // Define start screen
 Game.Screen.startScreen = new Game.Screen.basicScreen({
     enter: function() { console.log('Entered teh start screen'); },
@@ -509,6 +504,8 @@ Game.Screen.throwTargetScreen = new Game.Screen.TargetBasedScreen({
 
 // Define our help screen
 Game.Screen.helpScreen = new Game.Screen.basicScreen({
+    enter: function(display) {},
+    exit: function(display) {},
     render: function(display) {
         var text = 'Cave-Quest Help';
         var border = '---------------';
@@ -542,10 +539,14 @@ Game.Screen.helpScreen = new Game.Screen.basicScreen({
 
 // Level-up screen
 Game.Screen.gainStatScreen = new Game.Screen.basicScreen({
-    setup: function(entity) {
+    enter: function(entity) {
         // Must be called before rendering.
         this._entity = entity;
         this._options = entity.getStatOptions();
+        Game.Screen.playScreen.setSubScreen(Game.Screen.gainStatScreen);
+    },
+    exit: function() {
+        Game.Screen.playScreen.setSubScreen(undefined);
     },
     render: function(display) {
         var letters = 'abcdefghijklmnopqrstuvwxyz';
@@ -572,8 +573,8 @@ Game.Screen.gainStatScreen = new Game.Screen.basicScreen({
                     // Decrease stat points
                     this._entity.setStatPoints(this._entity.getStatPoints() - 1);
                     // If we have no stat points left, exit the screen, else refresh
-                    if (this._entity.getStatPoints() == 0) {
-                        Game.Screen.playScreen.setSubScreen(undefined);
+                    if (this._entity.getStatPoints() === 0) {
+                        this.exit();
                     } else {
                         Game.refresh();
                     }

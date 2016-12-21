@@ -9,9 +9,10 @@ Game.Screen.basicScreen = function(properties) {
     ];
 
     // Make sure they have the required methods...
-    for(var m in requiredMethods) {
-        if(properties[m] === undefined)
-            throw new Error("'" + m + "' is a missing from your properties list and is required for this type of screen");
+    for(var i = 0; i < requiredMethods.length; i++) {
+        var method = requiredMethods[i];
+        if(properties[method] === undefined)
+            throw new Error("'" + method + "' is a missing from your properties list and is required for this type of screen");
     }
 
     // Set properties for the screen
