@@ -1,7 +1,7 @@
 // @size should be square number of lots for a city.
-Game.Map = function(tiles, generateEntities, generateItems, player) {
+Game.Map = function(width, height, depth, player) {
     // Used for drawing to various displays 
-    this._tiles = tiles;
+    this._tiles = this._generateTiles(width, height, depth);
 
     // Cache dimensions
     this._depth = this._tiles.length;
@@ -52,6 +52,47 @@ Game.Map.prototype.getEntities = function() {
 };
 Game.Map.prototype.getPlayer = function() {
     return this._player;
+};
+
+Game.Map.prototype._generateTiles = function(width, height, depth) {
+    var tiles = new Array(depth);
+    var dungeon = new ROT.Map.Digger(width, height);
+
+    // Instantiate the arrays to be multi-dimension
+    for (var z = 0; z < depth; z++) {
+        // Create a new cave at each level
+        dungeon.create(function(x, y, wall) {
+            if(!tiles[z])
+                tiles[z] = new Array(width);
+            if(!tiles[z][x])
+                tiles[z][x] = new Array(height);
+
+            tiles[z][x][y] = wall ? Game.TileRepository.create('wall') : Game.TileRepository.create('floor');
+        });
+    }
+
+    // Place stairs
+    // Note, this does not actually ensure that stairs will be placed
+    for(var level = 0; level < depth - 1; level++) {
+        var floorX = null, 
+            floorY = null,
+            tries = 0;
+        do {
+            floorX = Math.floor(Math.random() * width);
+            floorY = Math.floor(Math.random() * height);
+            tries++;
+        } while((tiles[level][floorX][floorY].describe() !== 'floor' || 
+                    tiles[level + 1][floorX][floorY].describe() !== 'floor') && 
+            tries < 1000);
+
+        
+        if(tries < 1000 && floorX !== null && floorY !== null) {
+            tiles[level][floorX][floorY] = Game.TileRepository.create('stairsDown');
+            tiles[level + 1][floorX][floorY] = Game.TileRepository.create('stairsUp');
+        }
+    }
+
+    return tiles;
 };
 
 // For just adding actors to the scheduler
