@@ -14,7 +14,7 @@ Game.TileRepository.define('floor', {
 Game.TileRepository.define('wall', {
     name: 'wall',
 	character: '#',
-	foreground: '#ab2e34',
+	foreground: 'white',
 	blocksLight: true,
     outerWall: true,
     description: 'The wall'

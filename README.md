@@ -4,11 +4,15 @@ A JavaScript framework that implements ROT.js for building Roguelike games in th
 
 ## Installation
 
-Run `npm install --save-dev hobgoblin`
+Run `npm install -g hobgoblin` to have access to the tool globally
+
+OR
+
+`npm install --save-dev hobgoblin`
 
 ## Usage
 
-`hobgoblin init` from the root of your project will initialize the framework, and you should end up with the following directory structure:
+`hobgoblin init` (or `node node_modules/hobgoblin/hobgoblin.js` if you installed locally) from the root of your project will initialize the framework, and you should end up with the following directory structure:
 
 ```
 js/

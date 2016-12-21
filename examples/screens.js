@@ -506,13 +506,11 @@ Game.Screen.helpScreen = new Game.Screen.basicScreen({
     enter: function(display) {},
     exit: function(display) {},
     render: function(display) {
-        var text = 'Cave-Quest Help';
+        var text = '[Your Roguelike] Help';
         var border = '---------------';
         var y = 0;
         display.drawText(Game.getScreenWidth() / 2 - text.length / 2, y++, text);
         display.drawText(Game.getScreenWidth() / 2 - text.length / 2, y++, border);
-        display.drawText(0, y++, 'The villagers have been complaining of a terrible stench coming from the cave.');
-        display.drawText(0, y++, 'Find the source of this smell and get rid of it!');
         y += 3;
         display.drawText(0, y++, 'Arrow keys to move');
         display.drawText(0, y++, '[<] to go up stairs');
