@@ -88,14 +88,37 @@ program
 	});
 
 function generateIndexHTML(jsFiles) {
+	var jsOrder = [
+		"game.js",
+		"utilities.js",
+		"geometry.js",
+		"repository.js",
+		"glyph.js",
+		"glyph-dynamic.js",
+		"tile.js",
+		"tiles.js",
+		"entity.js",
+		"entity-mixins.js",
+		"item.js",
+		"item-mixins.js",
+		"map.js",
+		"screens.js",
+		"example-screens.js",
+		"example-tiles.js",
+		"example-items.js",
+		"example-entities.js"
+	];
+
 	var html = '<!DOCTYPE html>\n';
 		html += '<html lang="en">\n';
 		html += '<head>\n';
 		html += '\t<meta charset="UTF-8">\n';
 		html += '\t<title>[Your Game] - A Roguelike</title>\n';
-		html += '\t<link rel="stylesheet" href="css/style.css">\n';
 		for (var i = 0; i < jsFiles.length; i++) {
-			html += '\t<script src="js/' + jsFiles[i] + '" type="text/javascript"></script>\n';
+			if(jsOrder.indexOf(jsFiles[i]) < 0)
+				throw new Error("This file must be ordered: " + jsFiles[i]);
+
+			html += '\t<script src="js/' + jsOrder[i] + '" type="text/javascript"></script>\n';
 		}
 		html += '</head>\n';
 		html += '<body></body>\n';
