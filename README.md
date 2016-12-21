@@ -19,7 +19,9 @@ index.html
 
 ### Important!
 
-Without examples, you will need to implement `Game.Screen.startScreen` or change this reference in `game.js` in order for to begin the framework. I would recommend using `hobgoblin init --examples` in order to see one way this can be done.
+If using examples, you MUST comment out `example-tiles.js` in `index.html` or else it will overwrite the existing `Game.TileRepository` and break. Besides this however, when using examples, a fully explorable, multi-tiered dungeon will be available upon browsing to `index.html`.
+
+Without examples, you will need to implement at least one screen and update `game.js` to reference this screen instead of `Game.Screen.startScreen`. This will include things like handling input, but you should be able to leverage the generic implementation of `map.js` to create levels very easily. I would highly recommend using `hobgoblin init --examples` in order to see one way this can be done.
 
 ## Hobgoblin Framework
 
@@ -27,7 +29,6 @@ Without examples, you will need to implement `Game.Screen.startScreen` or change
 
 ## TODOs
 
-* add css file (?)
 * Add option to install ROT.js via Bower
 * Update example directory to include latest examples
 * Publish to npm
