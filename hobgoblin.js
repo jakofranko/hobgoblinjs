@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#!/usr/bin/env node --harmony
 'use strict';
 
 // https://medium.freecodecamp.com/writing-command-line-applications-in-nodejs-2cf8327eee2#.196im2niz
@@ -7,6 +7,7 @@
 
 const program = require('commander'),
 	  chalk = require('chalk'),
+	  ProgressBar = require('progress'),
 	  fs = require('fs'),
 	  p = require('path');
 
@@ -30,13 +31,17 @@ program
 		let jsFiles;
 		for (var i = 0; i < contents.length; i++) {
 			if(jsDir.indexOf(contents[i]) > -1) {
-				chalk.blue(contents[i] + ' already exists. Skipping...');
+				console.log(chalk.blue(contents[i] + ' already exists. Skipping...'));
 			} else {
 				let filePath = srcDir + contents[i];
+				let fileSize = fs.statSync(filePath).size;
 				let readStream = fs.createReadStream(filePath);
 				let newFile = fs.createWriteStream('js/' + contents[i]);
-				console.log('Writing file ' + contents[i] + '...');
+
+				let bar = new ProgressBar("Writing file " + contents[i] + ": [:bar] :percent", {total: fileSize});
+				
 				readStream.on('data', (chunk) => {
+					bar.tick(chunk.length);
 					newFile.write(chunk);
 				});
 				readStream.on('end', () => {
@@ -57,13 +62,17 @@ program
 			});
 			for (var i = 0; i < exampleFiles.length; i++) {
 				if(jsDir.indexOf(exampleFiles[i]) > -1) {
-					chalk.blue(exampleFiles[i] + ' already exists. Skipping...');
+					console.log(chalk.blue(exampleFiles[i] + ' already exists. Skipping...'));
 				} else {
 					let filePath = exampleDir + examples[i]; // read from unmodified file name
+					let fileSize = fs.statSync(filePath).size;
 					let readStream = fs.createReadStream(filePath);
 					let newFile = fs.createWriteStream('js/' + exampleFiles[i]);
-					console.log('Writing file ' + exampleFiles[i] + '...');
+
+					let bar = new ProgressBar("Writing file " + exampleFiles[i] + ": [:bar] :percent", {total: fileSize});
+
 					readStream.on('data', (chunk) => {
+						bar.tick(chunk.length);
 						newFile.write(chunk);
 					});
 					readStream.on('end', () => {
@@ -79,11 +88,11 @@ program
 		}
 
 		if(fs.existsSync('index.html'))
-			chalk.blue("index.html already exists. Skipping...");
+			console.log(chalk.blue("index.html already exists. Skipping..."));
 		else
 			fs.writeFile('index.html', generateIndexHTML(jsFiles), (err) => {
 				if(err) console.error(err);
-				else chalk.bold.green("done!");
+				else console.log(chalk.bold.green("done!"));
 			});
 	});
 
