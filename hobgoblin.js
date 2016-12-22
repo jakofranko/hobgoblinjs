@@ -39,7 +39,7 @@ program
 				let newFile = fs.createWriteStream('js/' + contents[i]);
 
 				let bar = new ProgressBar("Writing file " + contents[i] + ": [:bar] :percent", {total: fileSize});
-				
+
 				readStream.on('data', (chunk) => {
 					bar.tick(chunk.length);
 					newFile.write(chunk);
@@ -111,7 +111,7 @@ function generateIndexHTML(jsFiles) {
 		"item.js",
 		"item-mixins.js",
 		"map.js",
-		"screens.js",
+		"screen.js",
 		"example-screens.js",
 		"example-tiles.js",
 		"example-items.js",
