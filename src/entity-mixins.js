@@ -346,6 +346,13 @@ Game.EntityMixins.InventoryHolder = {
         var inventorySlots = template['inventorySlots'] || 10;
         // Set up an empty inventory.
         this._items = new Array(inventorySlots);
+        
+        // If the template specifies items, put them in the entity's inventory
+        if(template['items']) {
+            for (var i = 0; i < template['items'].length; i++) {
+                this._items[i] = Game.ItemRepository.create(template['items'][i]);
+            }
+        }
     },
     getItems: function() {
         return this._items;
