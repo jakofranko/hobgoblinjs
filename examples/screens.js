@@ -148,6 +148,9 @@ Game.Screen.playScreen = new Game.Screen.basicScreen({
                 } else {
                     this.showItemsSubScreen(Game.Screen.pickupScreen, items, 'There is nothing here to pick up.');
                 } 
+            } else if(inputData.keyCode === ROT.VK_SPACE) {
+                Game.Screen.actionMenu.setup(this._player);
+                this.setSubScreen(Game.Screen.actionMenu);
             } else {
                 // Not a valid key
                 return;
@@ -503,6 +506,7 @@ Game.Screen.throwTargetScreen = new Game.Screen.TargetBasedScreen({
 
 // Menu-based screens
 Game.Screen.actionMenu = new Game.Screen.MenuScreen({
+    caption: 'Action Menu',
     buildMenuItems: function() {
         var adjacentCoords = Game.Geometry.getCircle(this._player.getX(), this._player.getY(), 1),
             map = this._player.getMap(),
