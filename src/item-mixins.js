@@ -135,3 +135,59 @@ Game.ItemMixins.Throwable = {
         }
     }
 };
+
+// Adding an item to a container removes it from the entity.
+// Removing an item from a container adds it to the entity.
+Game.ItemMixins.Container = {
+    name: 'Container',
+    init: function(template) {
+        this._items = [];
+    },
+    getItems: function() {
+        return this._items;
+    },
+    getItem: function(i) {
+        return this._items[i];
+    },
+    addItem: function(entity, index, amount) {
+        debugger;
+        if(!entity.hasMixin('InventoryHolder') && !entity.hasMixin('Container')) {
+            return false;
+        }
+        var item = entity.getItem(index);
+        this._items.push(item);
+        entity.removeItem(index, amount);
+
+        if(entity.hasMixin('MessageRecipient'))
+            Game.sendMessage(entity, "You place %s into %s", [item.describeThe(), this.describeThe()]);
+
+    },
+    removeItem: function(entity, index, amount) {
+        debugger;
+        if(!entity.hasMixin('InventoryHolder') && !entity.hasMixin('Container')) {
+            return false;
+        }
+        var item = this.getItem(index);
+        entity.addItem(item);
+        this._items.splice(index, 1);
+
+        if(entity.hasMixin('MessageRecipient'))
+            Game.sendMessage(entity, "You remove %s from %s", [item.describeThe(), this.describeThe()]);
+    },
+    listeners: {
+        'action': function(actionTaker) {
+            var actions = {};
+            var actionName = "Open %s".format(this.describeThe());
+
+            // array of functions to execute. For each sub-array,
+            // first value is the action function,
+            // second value are the args,
+            // third (optional) value is the 'this' context to use
+            actions[actionName] = [
+                [Game.Screen.containerScreen.setup, [actionTaker, actionTaker.getItems(), this, this.getItems()], Game.Screen.containerScreen],
+                [Game.Screen.playScreen.setSubScreen, [Game.Screen.containerScreen], Game.Screen.playScreen]
+            ];
+            return actions;
+        }
+    }
+};
