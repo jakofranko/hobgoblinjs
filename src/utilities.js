@@ -25,9 +25,10 @@ Game.DijkstraMap = function(grid, goals, skips) {
     this._fill = grid.length * grid[0].length;
     this._skipsFunction = null;
     this._goalsFunction = null;
-    this._recalcAll = true;
-    this._recalcGoals = false;
-    this._recalcSkips = false; // denotes when the dijkstraMap needs to be recalculated
+    this._recalc = true; // denotes when the dijkstraMap needs to be recalculated
+    this._reInit = false;
+    this._updateGoals = false;
+    this._updateSkips = false;
 
     if(typeof skips === 'function')
         this._skipsFunction = skips;
@@ -40,8 +41,24 @@ Game.DijkstraMap = function(grid, goals, skips) {
         this._goals = goals;
 
     // Initialize the dijkstra map with the fill
-    for (var x = 0; x < grid.length; x++) {
-        for (var y = 0; y < grid[x].length; y++) {
+    this.initialize(grid);
+
+    // Create the map
+    this.update();
+};
+Game.DijkstraMap.prototype.update = function(grid) {
+    if(this._reInit && grid)
+        this.initialize(grid);
+    if(this._updateSkips && grid)
+        this.updateSkips(grid);
+    if(this._updateGoals)
+        this.updateGoals();
+    if(this._recalc)
+        this.calculate();
+};
+Game.DijkstraMap.prototype.initialize = function(grid) {
+    for(var x = 0; x < grid.length; x++) {
+        for(var y = 0; y < grid[x].length; y++) {
             var coord = x + "," + y;
 
             if(this._skipsFunction) {
@@ -52,7 +69,7 @@ Game.DijkstraMap = function(grid, goals, skips) {
                 }
             } else {
                 // As long as the coordinate shouldn't be skipped, fill it
-                if(skips.indexOf(coord) < 0)
+                if(this._skips.indexOf(coord) < 0)
                     this._dijkstraMap[coord] = this._fill;
             }
 
@@ -62,14 +79,67 @@ Game.DijkstraMap = function(grid, goals, skips) {
                     this._dijkstraMap[coord] = 0;    
                 }
             } else {
-                if(goals.indexOf(coord) > -1)
+                if(this._goals.indexOf(coord) > -1)
                     this._dijkstraMap[coord] = 0;
             }
         }
     }
+    this._reInit = false;
 };
-Game.DijkstraMap.prototype.create = function() {
-    debugger;
+Game.DijkstraMap.prototype.setRecalc = function(recalc) {
+    this._recalc = !!recalc; // Cast to bool
+};
+Game.DijkstraMap.prototype.setGoals = function(goals) {
+    if(typeof goals === 'function')
+        this._goalsFunction = goals;
+    else
+        this._goals = goals;
+    this._updateGoals = true;
+    this._recalc = true;
+};
+Game.DijkstraMap.prototype.setSkips = function(skips) {
+    if(typeof skips === 'function')
+        this._skipsFunction = skips;
+    else
+        this._skips = skips;
+    this._updateSkips = true;
+};
+Game.DijkstraMap.prototype.updateGoals = function() {
+    for(var coord in this._dijkstraMap) {
+        if(this._goalsFunction) {
+            if(this._goalsFunction(coord, grid)) {
+                this._goals.push(coord);
+                this._dijkstraMap[coord] = 0;
+            }
+        } else {
+            if(this._goals.indexOf(coord) > -1)
+                this._dijkstraMap[coord] = 0;
+        }
+    }
+    this._updateGoals = false;
+};
+Game.DijkstraMap.prototype.updateSkips = function(grid) {
+    for(var x = 0; x < grid.length; x++) {
+        for(var y = 0; y < grid[x].length; y++) {
+            var coord = x + "," + y;
+
+            if(this._skipsFunction) {
+                if(this._skipsFunction(coord, grid)) {
+                    this._skips.push(coord);
+                } else {
+                    this._dijkstraMap[coord] = this._fill;
+                }
+            } else {
+                // As long as the coordinate shouldn't be skipped, fill it
+                if(this._skips.indexOf(coord) < 0)
+                    this._dijkstraMap[coord] = this._fill;
+            }
+        }
+    }
+    this._updateSkips = false;
+    this._recalc = true;
+};
+Game.DijkstraMap.prototype.calculate = function() {
     // A list of tiles to check
     var dirtyTiles = [];
     for(var coord in this._dijkstraMap) {
@@ -103,35 +173,41 @@ Game.DijkstraMap.prototype.create = function() {
             }
         }
     }
+    this._recalc = false;
 };
 Game.DijkstraMap.prototype._getNeighbors = function(coord) {
     var neighbors = [],
-        split = coord.split(","),
-        x = +split[0],
-        y = +split[1];
+        offsets = this._getOffsets(coord);
 
-    var left = x - 1,
-        leftCoord = left + "," + y,
-        right = x + 1,
-        rightCoord = right + "," + y,
-        up = y - 1,
-        upCoord = x + "," + up,
-        down = y + 1,
-        downCoord = x + "," + down;
-
-    if(this._dijkstraMap[leftCoord] !== undefined)
-        neighbors.push(leftCoord);
-
-    if(this._dijkstraMap[rightCoord] !== undefined)
-        neighbors.push(rightCoord);
-
-    if(this._dijkstraMap[upCoord] !== undefined)
-        neighbors.push(upCoord);
-
-    if(this._dijkstraMap[downCoord] !== undefined)
-        neighbors.push(downCoord);
+    for (var i = 0; i < offsets.length; i++) {
+        if(this._dijkstraMap[offsets[i]] !== undefined) {
+            neighbors.push(offsets[i]);
+        }
+    }
 
     return neighbors;
+};
+Game.DijkstraMap.prototype._getOffsets = function(coord) {
+    var offsets = [],
+        split = coord.split(","),
+        x = +split[0], // Cast to number
+        y = +split[1]; // Cast to number;
+
+    offsets.push(Number(x + 1) + "," + y);
+    offsets.push(Number(x - 1) + "," + y);
+    offsets.push(x + "," + Number(y + 1));
+    offsets.push(x + "," + Number(y - 1));
+    return offsets;
+};
+Game.DijkstraMap.prototype.getNext = function(x, y) {
+    var currVal = this._dijkstraMap[x + "," + y],
+        offsets = this._getOffsets(x + "," + y);
+    for (var i = 0; i < offsets.length; i++) {
+        if(this._dijkstraMap[offsets[i]] < currVal) {
+            return offsets[i];
+        }
+    }
+    return false;
 };
 Game.DijkstraMap.prototype._consoleLog = function() {
     var grid = [];
