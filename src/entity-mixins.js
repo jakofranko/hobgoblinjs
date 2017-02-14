@@ -1,6 +1,7 @@
 // From http://www.codingcookies.com/2013/04/20/building-a-roguelike-in-javascript-part-4/
 Game.EntityMixins = {};
 
+// TODO: Implement friends and enemies and functions for getting, setting and scanning for them
 Game.EntityMixins.AIActor = {
     name: 'AIActor',
     groupName: 'Actor',
