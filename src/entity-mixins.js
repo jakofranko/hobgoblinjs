@@ -530,7 +530,7 @@ Game.EntityMixins.PlayerStatGainer = {
     listeners: {
         onGainLevel: function() {
             // Setup the gain stat screen and show it.
-            Game.Screen.gainStatScreen.setup(this);
+            Game.Screen.gainStatScreen.enter(this);
             Game.Screen.playScreen.setSubScreen(Game.Screen.gainStatScreen);
         }
     }

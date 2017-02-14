@@ -27,7 +27,7 @@ Game.Map = function(width, height, depth, player) {
     this._entities = {};
 
     // Add monsters here
-    for (var z = 0; z < this_depth; z++)
+    for (var z = 0; z < this._depth; z++)
         for (var i = 0; i < 10; i++)
             this.addEntityAtRandomPosition(Game.EntityRepository.createRandom(), z);
 
