@@ -112,6 +112,8 @@ function generateIndexHTML(jsFiles) {
 		"item-mixins.js",
 		"map.js",
 		"screen.js",
+		"ai.js",
+		"ai-tasks.js",
 		"example-screens.js",
 		"example-tiles.js",
 		"example-items.js",
