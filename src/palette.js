@@ -1,0 +1,3 @@
+Game.Palette = {
+	blue: 'blue'
+};

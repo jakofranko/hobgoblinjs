@@ -100,6 +100,7 @@ function generateIndexHTML(jsFiles) {
 	var jsOrder = [
 		"game.js",
 		"utilities.js",
+		"palette.js",
 		"geometry.js",
 		"repository.js",
 		"glyph.js",
