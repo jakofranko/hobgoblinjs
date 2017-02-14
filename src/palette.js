@@ -1,3 +1,7 @@
 Game.Palette = {
-	blue: 'blue'
+	blue: 'blue',
+	green: 'green',
+	grey: 'grey',
+	pink: 'pink',
+	darkgrey: 'darkgrey',
 };
