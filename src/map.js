@@ -25,7 +25,11 @@ Game.Map = function(width, height, depth, player) {
 
     // Create a table which will hold the entities
     this._entities = {};
+
     // Add monsters here
+    for (var z = 0; z < this_depth; z++)
+        for (var i = 0; i < 10; i++)
+            this.addEntityAtRandomPosition(Game.EntityRepository.createRandom(), z);
 
     // Add the Player
     this.addEntityAtRandomPosition(player, 0);
