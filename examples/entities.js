@@ -9,8 +9,8 @@ Game.PlayerTemplate = {
     sightRadius: 6,
     inventorySlots: 22,
     mixins: [
-        Game.EntityMixins.Sight, 
-        Game.EntityMixins.PlayerActor, 
+        Game.EntityMixins.Sight,
+        Game.EntityMixins.PlayerActor,
         Game.EntityMixins.Destructible,
         Game.EntityMixins.Equipper,
         Game.EntityMixins.Attacker,
@@ -30,9 +30,9 @@ Game.EntityRepository.define('fungus', {
     maxHp: 10,
     speed: 250,
     mixins: [
-        Game.EntityMixins.FungusActor, 
-        Game.EntityMixins.Destructible, 
-        Game.EntityMixins.ExperienceGainer, 
+        Game.EntityMixins.FungusActor,
+        Game.EntityMixins.Destructible,
+        Game.EntityMixins.ExperienceGainer,
         Game.EntityMixins.RandomStatGainer
     ]
 });
@@ -45,11 +45,11 @@ Game.EntityRepository.define('bat', {
     attackValue: 4,
     speed: 2000,
     mixins: [
-        Game.EntityMixins.TaskActor, 
-        Game.EntityMixins.Attacker, 
-        Game.EntityMixins.CorpseDropper, 
-        Game.EntityMixins.Destructible, 
-        Game.EntityMixins.ExperienceGainer, 
+        Game.EntityMixins.AIActor,
+        Game.EntityMixins.Attacker,
+        Game.EntityMixins.CorpseDropper,
+        Game.EntityMixins.Destructible,
+        Game.EntityMixins.ExperienceGainer,
         Game.EntityMixins.RandomStatGainer
     ]
 });
@@ -61,11 +61,11 @@ Game.EntityRepository.define('newt', {
     maxHp: 3,
     attackValue: 2,
     mixins: [
-        Game.EntityMixins.TaskActor,
+        Game.EntityMixins.AIActor,
         Game.EntityMixins.Attacker,
         Game.EntityMixins.CorpseDropper,
-        Game.EntityMixins.Destructible, 
-        Game.EntityMixins.ExperienceGainer, 
+        Game.EntityMixins.Destructible,
+        Game.EntityMixins.ExperienceGainer,
         Game.EntityMixins.RandomStatGainer
     ]
 });
@@ -77,14 +77,14 @@ Game.EntityRepository.define('kobold', {
     maxHp: 6,
     attackValue: 4,
     sightRadius: 5,
-    tasks: ['hunt', 'wander'],
+    ai: ['hunt', 'wander'],
     mixins: [
-        Game.EntityMixins.TaskActor, 
+        Game.EntityMixins.AIActor,
         Game.EntityMixins.Sight,
-        Game.EntityMixins.Attacker, 
+        Game.EntityMixins.Attacker,
         Game.EntityMixins.Destructible,
-        Game.EntityMixins.CorpseDropper, 
-        Game.EntityMixins.ExperienceGainer, 
+        Game.EntityMixins.CorpseDropper,
+        Game.EntityMixins.ExperienceGainer,
         Game.EntityMixins.RandomStatGainer
     ]
 });
@@ -96,14 +96,14 @@ Game.EntityRepository.define('goblin', {
     maxHp: 10,
     attackValue: 6,
     sightRadius: 8,
-    tasks: ['hunt', 'wander'],
+    ai: ['hunt', 'wander'],
     mixins: [
-        Game.EntityMixins.TaskActor, 
+        Game.EntityMixins.AIActor,
         Game.EntityMixins.Sight,
-        Game.EntityMixins.Attacker, 
+        Game.EntityMixins.Attacker,
         Game.EntityMixins.Destructible,
-        Game.EntityMixins.CorpseDropper, 
-        Game.EntityMixins.ExperienceGainer, 
+        Game.EntityMixins.CorpseDropper,
+        Game.EntityMixins.ExperienceGainer,
         Game.EntityMixins.RandomStatGainer
     ]
 });
@@ -118,9 +118,9 @@ Game.EntityRepository.define('giant zombie', {
     level: 5,
     sightRadius: 6,
     mixins: [
-        Game.EntityMixins.GiantZombieActor, 
+        Game.EntityMixins.GiantZombieActor,
         Game.EntityMixins.Sight,
-        Game.EntityMixins.Attacker, 
+        Game.EntityMixins.Attacker,
         Game.EntityMixins.Destructible,
         Game.EntityMixins.CorpseDropper,
         Game.EntityMixins.ExperienceGainer
@@ -136,14 +136,14 @@ Game.EntityRepository.define('slime', {
     maxHp: 10,
     attackValue: 5,
     sightRadius: 3,
-    tasks: ['hunt', 'wander'],
+    ai: ['hunt', 'wander'],
     mixins: [
-        Game.EntityMixins.TaskActor, 
+        Game.EntityMixins.AIActor,
         Game.EntityMixins.Sight,
-        Game.EntityMixins.Attacker, 
+        Game.EntityMixins.Attacker,
         Game.EntityMixins.Destructible,
         Game.EntityMixins.CorpseDropper,
-        Game.EntityMixins.ExperienceGainer, 
+        Game.EntityMixins.ExperienceGainer,
         Game.EntityMixins.RandomStatGainer
     ]
 });
