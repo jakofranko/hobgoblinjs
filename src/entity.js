@@ -2,6 +2,7 @@ Game.Entity = function(properties) {
 	properties = properties || {};
 	Game.DynamicGlyph.call(this, properties);
 	this._name = properties['name'] || '';
+    this._type = properties['type'] || null;
 	this._alive = true;
 	this._x = properties['x'] || 0;
 	this._y = properties['y'] || 0;
@@ -37,6 +38,9 @@ Game.Entity.prototype.setPosition = function(x, y, z) {
 	if(this._map) {
 		this._map.updateEntityPosition(this, oldX, oldY, oldZ);
 	}
+};
+Game.Entity.prototype.getType = function() {
+    return this._type;
 };
 Game.Entity.prototype.getSpeed = function() {
     return this._speed;

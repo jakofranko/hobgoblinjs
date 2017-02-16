@@ -2,6 +2,7 @@ Game.EntityRepository = new Game.Repository('entities', Game.Entity);
 
 Game.PlayerTemplate = {
     name: 'human (you)',
+    type: 'player',
     character: '@',
     foreground: 'white',
     maxHp: 40,
@@ -25,6 +26,7 @@ Game.PlayerTemplate = {
 
 Game.EntityRepository.define('fungus', {
     name: 'fungus',
+    type: 'creature',
     character: 'F',
     foreground: 'green',
     maxHp: 10,
@@ -39,6 +41,7 @@ Game.EntityRepository.define('fungus', {
 
 Game.EntityRepository.define('bat', {
     name: 'bat',
+    type: 'creature',
     character: 'B',
     foreground: 'white',
     maxHp: 5,
@@ -56,6 +59,7 @@ Game.EntityRepository.define('bat', {
 
 Game.EntityRepository.define('newt', {
     name: 'newt',
+    type: 'creature',
     character: ':',
     foreground: 'yellow',
     maxHp: 3,
@@ -72,6 +76,7 @@ Game.EntityRepository.define('newt', {
 
 Game.EntityRepository.define('kobold', {
     name: 'kobold',
+    type: 'monster',
     character: 'k',
     foreground: 'white',
     maxHp: 6,
@@ -91,6 +96,7 @@ Game.EntityRepository.define('kobold', {
 
 Game.EntityRepository.define('goblin', {
     name: 'goblin',
+    type: 'monster',
     character: 'g',
     foreground: 'limegreen',
     maxHp: 10,
@@ -110,6 +116,7 @@ Game.EntityRepository.define('goblin', {
 
 Game.EntityRepository.define('giant zombie', {
     name: 'giant zombie', 
+    type: 'monster',
     character: 'Z',
     foreground: 'teal',
     maxHp: 30,
@@ -131,6 +138,7 @@ Game.EntityRepository.define('giant zombie', {
 
 Game.EntityRepository.define('slime', {
     name: 'slime',
+    type: 'monster',
     character: 's',
     foreground: 'lightGreen',
     maxHp: 10,
