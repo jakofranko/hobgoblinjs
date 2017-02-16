@@ -46,7 +46,7 @@ Game.EntityMixins.AIActor = {
             var radius = this.getSightRadius();
             var entities = this.getMap().getEntitiesWithinRadius(this.getX(), this.getY(), this.getZ(), radius);
             for (var i = 0; i < entities.length; i++) {
-                if((this._friends.indexOf(entity[i].getName() > -1) || this._friends.indexOf(entity[i].getType() > -1)) && this.canSee(entities[i]))
+                if((this._friends.indexOf(entities[i].getName()) > -1 || this._friends.indexOf(entities[i].getType()) > -1) && this.canSee(entities[i]))
                     friends.push(entities[i])
             }
             return friends;
@@ -61,7 +61,7 @@ Game.EntityMixins.AIActor = {
             var radius = this.getSightRadius();
             var entities = this.getMap().getEntitiesWithinRadius(this.getX(), this.getY(), this.getZ(), radius);
             for (var i = 0; i < entities.length; i++) {
-                if((this._enemies.indexOf(entity[i].getName() > -1) || this._enemies.indexOf(entity[i].getType() > -1)) && this.canSee(entities[i]))
+                if((this._enemies.indexOf(entities[i].getName()) > -1 || this._enemies.indexOf(entities[i].getType()) > -1) && this.canSee(entities[i]))
                     enemies.push(entities[i]);
             }
             return enemies;

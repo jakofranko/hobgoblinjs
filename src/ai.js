@@ -4,13 +4,12 @@ Game.AI = {};
 Game.AI.hunt = function(entity) {
     var target = entity.getTarget();
     if(!target) {
-        debugger;
         var enemiesInSight = entity.scanForEnemies();
         if(enemiesInSight.length < 1)
-            Game.AI.Tasks.wander(entity);
+            return false; // This task has failed, so on to the next
         else {
-            target = enemies[0];
-            entity.setTarget(enemies[0]);
+            target = enemiesInSight[0];
+            entity.setTarget(enemiesInSight[0]);
         }
     }
     var adjacent = Game.AI.Tasks.approach(entity, target);

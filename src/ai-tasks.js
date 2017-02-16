@@ -3,6 +3,15 @@
 
 Game.AI.Tasks = {};
 
+// This task should be a wrapper to handle how an AI entity
+// will attack the target based on behavior and equipment
+// TODO: implement logic switches based on entity behavior
+// TODO: account for ranged weapons (need to separate the Attacker
+// mixin into melee and ranged versions (like in MonsterHunterRL))
+Game.AI.Tasks.attack = function(entity, target) {
+	if(entity.hasMixin('Attacker'))
+		entity.attack(target);
+};
 Game.AI.Tasks.approach = function(entity, target) {
 	// If no one is around, then just wander
 	if(!target) {
