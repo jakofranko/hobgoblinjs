@@ -1,15 +1,18 @@
 // From http://www.codingcookies.com/2013/04/20/building-a-roguelike-in-javascript-part-4/
 Game.EntityMixins = {};
 
-// TODO: Implement friends and enemies and functions for getting, setting and scanning for them
+// TODO: Implement functions for scanning for friends/enemies and getting the nearest of them
 Game.EntityMixins.AIActor = {
     name: 'AIActor',
     groupName: 'Actor',
     init: function(template) {
         // Load tasks
         this._ai = template['ai'] || ['wander'];
+        this._behavior = template['behavior'] || 'aggressive';
         this._target = template['target'] || null;
         this._path = template['path'] || [];
+        this._friends = template['friends'] || [this.getName(), this.getType()];
+        this._enemies = template['enemies'] || ['player'];
     },
     act: function() {
         // Iterate through all our behaviors
@@ -22,6 +25,9 @@ Game.EntityMixins.AIActor = {
 
         }
     },
+    getBehavior: function() {
+        return this._behavior;
+    },
     getTarget: function() {
         return this._target;
     },
@@ -30,6 +36,36 @@ Game.EntityMixins.AIActor = {
     },
     getNextStep: function() {
         return this._path.shift();
+    },
+    getFriends: function() {
+        return this._friends;
+    },
+    scanForFriends: function() {
+        if(this.hasMixin('Sight')) {
+            var friends = [];
+            var radius = this.getSightRadius();
+            var entities = this.getMap().getEntitiesWithinRadius(this.getX(), this.getY(), this.getZ(), radius);
+            for (var i = 0; i < entities.length; i++) {
+                if((this._friends.indexOf(entity[i].getName() > -1) || this._friends.indexOf(entity[i].getType() > -1)) && this.canSee(entities[i]))
+                    friends.push(entities[i])
+            }
+            return friends;
+        }
+    },
+    getEnemies: function() {
+        return this._enemies;
+    },
+    scanForEnemies: function() {
+        if(this.hasMixin('Sight')) {
+            var enemies = [];
+            var radius = this.getSightRadius();
+            var entities = this.getMap().getEntitiesWithinRadius(this.getX(), this.getY(), this.getZ(), radius);
+            for (var i = 0; i < entities.length; i++) {
+                if((this._enemies.indexOf(entity[i].getName() > -1) || this._enemies.indexOf(entity[i].getType() > -1)) && this.canSee(entities[i]))
+                    enemies.push(entities[i]);
+            }
+            return enemies;
+        }
     },
     setTarget: function(target) {
         this._target = target;
