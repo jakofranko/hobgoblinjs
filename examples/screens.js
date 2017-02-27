@@ -663,6 +663,7 @@ Game.Screen.loseScreen = new Game.Screen.basicScreen({
     },
     handleInput: function(inputType, inputData) {
         if(inputType === 'keydown' && inputData.keyCode === ROT.VK_RETURN) {
+            Game.Screen.playScreen.setGameEnded(true);
             Game.switchScreen(Game.Screen.startScreen);
         }     
     }

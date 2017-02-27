@@ -86,6 +86,7 @@ Game.EntityRepository.define('kobold', {
     mixins: [
         Game.EntityMixins.AIActor,
         Game.EntityMixins.Sight,
+        Game.EntityMixins.Equipper,
         Game.EntityMixins.Attacker,
         Game.EntityMixins.Destructible,
         Game.EntityMixins.CorpseDropper,
@@ -106,6 +107,7 @@ Game.EntityRepository.define('goblin', {
     mixins: [
         Game.EntityMixins.AIActor,
         Game.EntityMixins.Sight,
+        Game.EntityMixins.Equipper,
         Game.EntityMixins.Attacker,
         Game.EntityMixins.Destructible,
         Game.EntityMixins.CorpseDropper,
