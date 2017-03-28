@@ -16,7 +16,7 @@ var srcDir = hobgoblinDir + '/src/';
 var exampleDir = hobgoblinDir + '/examples/';
 
 program
-	.version('1.0.0')
+	.version('1.1.1')
 	.command('init')
 	.description('Initialize framework in current directory')
 	.option('-e, --examples', 'Pull in all example files')
