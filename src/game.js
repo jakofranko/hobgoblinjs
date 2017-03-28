@@ -14,6 +14,10 @@ var Game = {
 	    return this._screenHeight;
 	},
 	init: function() {
+		// Initialize loader
+		this.loadProgress = new Game.Loader(
+			[] // Put module names here as elements of array
+		);
 		// Add one to height for displaying stats
 	    this._display = new ROT.Display({width: this._screenWidth, height: this._screenHeight + 1});
 	    // Create a helper function for binding to an event
