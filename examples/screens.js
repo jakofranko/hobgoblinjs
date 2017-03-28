@@ -1,4 +1,4 @@
-// Define start screen
+// Start splash screen
 Game.Screen.startScreen = new Game.Screen.basicScreen({
     enter: function() { console.log('Entered teh start screen'); },
     exit: function() { console.log('Exited the start screen'); },
@@ -13,12 +13,110 @@ Game.Screen.startScreen = new Game.Screen.basicScreen({
     handleInput: function(inputType, inputData) {
         // When [Enter] is pressed, go to the play screen
         if(inputType === 'keydown' && inputData.keyCode === ROT.VK_RETURN) {
-            Game.switchScreen(Game.Screen.playScreen);
+            Game.switchScreen(Game.Screen.loadScreen);
         }
     }
 });
 
-// Define our playing screen
+// Displayed while files are loading and things are being generated
+Game.Screen.loadScreen = new Game.Screen.basicScreen({
+    enter: function() {
+        // Register test modules
+        Game.loadProgress.registerModule('Map');
+        Game.loadProgress.registerModule('Map', 'Lava');
+        Game.loadProgress.registerModule('Map', 'Water');
+        Game.loadProgress.registerModule('Map', 'Gold');
+        Game.loadProgress.registerModule('Monsters');
+        Game.loadProgress.registerModule('Items');
+    },
+    exit: function() {},
+    render: function(display) {
+        var w = Game.getScreenWidth();
+        var h = Game.getScreenHeight();
+        var progress = Game.loadProgress.getProgress();
+
+        // 100 being the max progress number
+        var barWidthMax = (w - 2) / 100; // -2 to account for end brackets
+
+        // Due to an anomaly with l and rpad, 0 will add a pad, 1 will not (since
+        // it gets the diff) so, if barWidth or barDiff are 0, then default to 1.
+        var barWidth = progress * barWidthMax || 1;
+        if(barWidth === 100 * barWidthMax)
+            barWidth -= 1; // So as to account for the cap char
+        var barDiff = (100 * barWidthMax) - barWidth || 1;
+        var bar = "[".rpad("=", barWidth);
+        var end = "]".lpad(" ", barDiff);
+        var progressBar = bar + end; // The length of this string should always be 78 (or w - 2)
+            
+        // Render prompt to the screen
+        display.drawText((w/2) - 5, 5, "%c{yellow}Loading...");
+        display.drawText((w/2) - (progressBar.length / 2), 7, progressBar);
+        if(progress < 1)
+            display.drawText((w/2) - 15, 9, "Press [Enter] to begin loading!");
+        if(progress >= 100)
+            display.drawText((w/2) - 24, 9, "Press [Enter] to play or [Escape] to load again!");
+    },
+    handleInput: function(inputType, inputData) {
+        // Purely as a demo, not functionally loading anything
+        var numModules = 5,
+            iterations = numModules * 10,
+            currIteration = 1;
+
+        Game.loadProgress.startModule('Map');   
+        function loadModules() {
+            switch(currIteration % numModules) {
+                case 0:
+                    Game.loadProgress.startSubmodule('Map', 'Lava');
+                    Game.loadProgress.updateSubmodule('Map', 'Lava', currIteration * 2);
+                    break;
+                case 1:
+                    Game.loadProgress.startSubmodule('Map', 'Water');
+                    Game.loadProgress.updateSubmodule('Map', 'Water', currIteration * 2);
+                    break;
+                case 2:
+                    Game.loadProgress.startSubmodule('Map', 'Gold');
+                    Game.loadProgress.updateSubmodule('Map', 'Gold', currIteration * 2);
+                    break;
+                case 3:
+                    Game.loadProgress.startModule('Monsters');
+                    Game.loadProgress.updateModule('Monsters', currIteration * 2);
+                    break;
+                case 4:
+                    Game.loadProgress.startModule('Items');
+                    Game.loadProgress.updateModule('Items', currIteration * 2);
+                    break;
+                default:
+                    break;
+            }
+
+            if(currIteration === iterations) {
+                Game.loadProgress.finishModule('Map');
+                Game.loadProgress.finishModule('Monsters');
+                Game.loadProgress.finishModule('Items');
+                clearInterval(window.intervalID);
+            } else {
+                currIteration++;
+            }
+
+            Game.refresh();
+        }
+
+        if(inputType == 'keydown') {
+            if(Game.loadProgress.getProgress() < 100) {
+                if(inputData.keyCode === ROT.VK_RETURN)
+                    window.intervalID = setInterval(loadModules, 50);
+                else if(inputData.keyCode === ROT.VK_ESCAPE)
+                    clearInterval(window.intervalID);
+            } else {
+                if(inputData.keyCode === ROT.VK_RETURN)
+                    Game.switchScreen(Game.Screen.playScreen);
+                else if(inputData.keyCode === ROT.VK_ESCAPE)
+                    window.intervalID = setInterval(loadModules, 50);
+            }
+        }
+    }
+});
+// Main play screen
 Game.Screen.playScreen = new Game.Screen.basicScreen({
     _player: null,
     _gameEnded: false,
