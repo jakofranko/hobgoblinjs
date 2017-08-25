@@ -5,6 +5,14 @@ Game.Repository = function(name, ctor) {
 	this._ctor = ctor; // ctor = 'constructor'
 };
 
+Game.Repository.prototype.getTemplate = function(name) {
+    return this._templates[name];
+};
+
+Game.Repository.prototype.getTemplates = function() {
+    return this._templates;
+};
+
 // Define a new named template.
 Game.Repository.prototype.define = function(name, template, options) {
     this._templates[name] = template;
@@ -29,7 +37,7 @@ Game.Repository.prototype.create = function(name, extraProperties) {
             // {random: true, values: ['val1', 'val2', 'val3']}
             // then create the element with a random value
             if(
-                extraProperties[key]['random'] && 
+                extraProperties[key]['random'] &&
                 extraProperties[key]['random'] === true &&
                 extraProperties[key]['values'] &&
                 extraProperties[key]['values'].constructor === Array
