@@ -69,7 +69,7 @@ Game.Screen.ItemListScreen.prototype.render = function(display) {
     // Render the no item row if enabled
     if (this._hasNoItemOption) {
         display.drawText(0, 1, '0 - no item');
-    }   
+    }
     // Render the caption in the top row
     display.drawText(0, 0, this._caption);
     var row = 0;

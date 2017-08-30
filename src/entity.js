@@ -83,13 +83,13 @@ Game.Entity.prototype.tryMove = function(x, y, z, map) {
             Game.sendMessage(this, "You descend to level %s!", [z + 1]);
         }
 	} else if(target) {
-		// An entity can only attack if the entity has the Attacker mixin and 
+		// An entity can only attack if the entity has the Attacker mixin and
         // either the entity or the target is the player.
         if (this.hasMixin('Attacker') &&
         	(this.hasMixin(Game.EntityMixins.PlayerActor) || target.hasMixin(Game.EntityMixins.PlayerActor))) {
             this.attack(target);
             return true;
-        } 
+        }
 
         // If not nothing we can do, but we can't move to the tile
         return false;

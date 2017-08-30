@@ -62,7 +62,7 @@ Game.Screen.loadScreen = new Game.Screen.basicScreen({
             iterations = numModules * 10,
             currIteration = 1;
 
-        Game.loadProgress.startModule('Map');   
+        Game.loadProgress.startModule('Map');
         function loadModules() {
             switch(currIteration % numModules) {
                 case 0:
@@ -121,7 +121,7 @@ Game.Screen.playScreen = new Game.Screen.basicScreen({
     _player: null,
     _gameEnded: false,
     _subScreen: null,
-    enter: function() { 
+    enter: function() {
         var width = 100;
         var height = 48;
         var depth = 6;
@@ -153,19 +153,19 @@ Game.Screen.playScreen = new Game.Screen.basicScreen({
         for (var i = 0; i < messages.length; i++) {
             // Draw each message, adding the number of lines
             messageY += display.drawText(
-                0, 
+                0,
                 messageY,
                 '%c{white}%b{black}' + messages[i]
             );
         }
 
-        // Render player HP 
+        // Render player HP
         var stats = '%c{white}%b{black}';
         stats += String.format(
-            'HP: %s/%s Level: %s XP: %s', 
-            this._player.getHp(), 
-            this._player.getMaxHp(), 
-            this._player.getLevel(), 
+            'HP: %s/%s Level: %s XP: %s',
+            this._player.getHp(),
+            this._player.getMaxHp(),
+            this._player.getLevel(),
             this._player.getExperience()
         );
         display.drawText(0, screenHeight, stats);
@@ -245,7 +245,7 @@ Game.Screen.playScreen = new Game.Screen.basicScreen({
                     }
                 } else {
                     this.showItemsSubScreen(Game.Screen.pickupScreen, items, 'There is nothing here to pick up.');
-                } 
+                }
             } else if(inputData.keyCode === ROT.VK_SPACE) {
                 Game.Screen.actionMenu.setup(this._player);
                 this.setSubScreen(Game.Screen.actionMenu);
