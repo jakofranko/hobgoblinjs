@@ -207,8 +207,8 @@ Game.Screen.TargetBasedScreen.prototype.setup = function(player, startX, startY,
     // Cache the FOV
     var visibleCells = {};
     this._player.getMap().getFov(this._player.getZ()).compute(
-        this._player.getX(), this._player.getY(), 
-        this._player.getSightRadius(), 
+        this._player.getX(), this._player.getY(),
+        this._player.getSightRadius(),
         function(x, y, radius, visibility) {
             visibleCells[x + "," + y] = true;
         });

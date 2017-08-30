@@ -545,9 +545,9 @@ Game.Screen.lookScreen = new Game.Screen.TargetBasedScreen({
     captionFunction: function(x, y) {
         var z = this._player.getZ();
         var map = this._player.getMap();
-        // If the tile is explored, we can give a better capton
+        // If the tile is explored, we can give a better caption
         if (map.isExplored(x, y, z)) {
-            // If the tile isn't explored, we have to check if we can actually 
+            // If the tile isn't explored, we have to check if we can actually
             // see it before testing if there's an entity or item.
             if (this._visibleCells[x + ',' + y]) {
                 var items = map.getItemsAt(x, y, z);
