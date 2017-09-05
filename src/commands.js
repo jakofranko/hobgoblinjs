@@ -19,30 +19,54 @@
 //
 // This architecture will involve two parts: 1) a 'handler' (for now, player input) that will take an input,
 // and return a command to be executed later, and 2) a list of commands.
+//
+// Final note: the function that is returned by a command should return a boolean value that will
+// indicate whether or not the command should unlock the game engine, thereby ending the entity's turn.
 
 Game.Commands = {};
 
 Game.Commands.moveCommand = function(diffX, diffY, diffZ) {
     return function(entity) {
-        entity.tryMove(entity.getX() - diffX, entity.getY() - diffY, entity.getZ() - diffZ);
+        return entity.tryMove(entity.getX() - diffX, entity.getY() - diffY, entity.getZ() - diffZ);
     };
 };
 
-Game.Commands.showScreenCommand = function(screen) {
-    return function() {
-        throw new Error('Must be defined');
+Game.Commands.showScreenCommand = function(screen, mainScreen) {
+    return function(entity) {
+        if(screen.setup)
+            screen.setup(entity);
+        mainScreen.setSubScreen(screen);
     };
 };
 
-Game.Commands.showItemScreenCommand = function(screen) {
-    return function() {
-        throw new Error('Must be defined');
+Game.Commands.showItemScreenCommand = function(itemScreen, mainScreen, noItemsMessage, getItems = false) {
+    return function(entity) {
+        // Items screens' setup method will always return the number of items they will display.
+        // This can be used to determine a prompt if no items will display in the menu
+        var items = getItems ? getItems() : entity.getItems();
+        var acceptableItems = itemScreen.setup(entity, items);
+        if(acceptableItems > 0)
+            mainScreen.setSubScreen(itemScreen);
+        else {
+            Game.sendMessage(entity, noItemsMessage);
+            Game.refresh();
+        }
     };
 };
 
-Game.Commands.showTargettingScreenCommand = function(screen) {
-    return function() {
-        throw new Error('Must be defined');
+Game.Commands.showTargettingScreenCommand = function(targettingScreen, mainScreen) {
+    return function(entity) {
+        // Make sure the x-axis doesn't go above the top bound
+        var topLeftX = Math.max(0, entity.getX() - (Game.getScreenWidth() / 2));
+        // Make sure we still have enough space to fit an entire game screen
+        var offsetX = Math.min(topLeftX, entity.getMap().getWidth() - Game.getScreenWidth());
+        // Make sure the y-axis doesn't go above the top bound
+        var topLeftY = Math.max(0, entity.getY() - (Game.getScreenHeight() / 2));
+        // Make sure we still have enough space to fit an entire game screen
+        var offsetY = Math.min(topLeftY, entity.getMap().getHeight() - Game.getScreenHeight());
+
+        targettingScreen.setup(entity, entity.getX(), entity.getY(), offsetX, offsetY);
+        mainScreen.setSubScreen(targettingScreen);
     };
 };
 

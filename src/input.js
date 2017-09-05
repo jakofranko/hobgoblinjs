@@ -11,23 +11,23 @@ Game.Input.controlMaps = {};
 // These controlMaps could/should be defined from each screen? Maybe not
 Game.Input.controlMaps.playScreen = {
     keydown: {
-        'ArrowLeft':    Game.Commands.moveCommand.bind(this, -1, 0, 0),
-        'ArrowRight':   Game.Commands.moveCommand.bind(this, 1, 0, 0),
-        'ArrowUp':      Game.Commands.moveCommand.bind(this, 0, -1, 0),
-        'ArrowDown':    Game.Commands.moveCommand.bind(this, 0, 1, 0),
+        'ArrowRight':   Game.Commands.moveCommand.bind(this, -1, 0, 0),
+        'ArrowLeft':    Game.Commands.moveCommand.bind(this, 1, 0, 0),
+        'ArrowDown':    Game.Commands.moveCommand.bind(this, 0, -1, 0),
+        'ArrowUp':      Game.Commands.moveCommand.bind(this, 0, 1, 0),
         '>':            Game.Commands.moveCommand.bind(this, 0, 0, -1),
         '<':            Game.Commands.moveCommand.bind(this, 0, 0, 1),
-        'Space':        Game.Commands.showItemScreenCommand.bind(this, Game.Screen.actionScreen),
-        'i':            Game.Commands.showItemScreenCommand.bind(this, Game.Screen.inventoryScreen),
-        'd':            Game.Commands.showItemScreenCommand.bind(this, Game.Screen.dropScreen),
-        'e':            Game.Commands.showItemScreenCommand.bind(this, Game.Screen.eatScreen),
-        'w':            Game.Commands.showItemScreenCommand.bind(this, Game.Screen.wieldScreen),
-        'W':            Game.Commands.showItemScreenCommand.bind(this, Game.Screen.wearScreen),
-        'x':            Game.Commands.showItemScreenCommand.bind(this, Game.Screen.examineScreen),
-        't':            Game.Commands.showItemScreenCommand.bind(this, Game.Screen.throwScreen),
+        'Space':        Game.Commands.showScreenCommand.bind(this, Game.Screen.actionScreen, Game.Screen.playScreen),
+        'i':            Game.Commands.showItemScreenCommand.bind(this, Game.Screen.inventoryScreen, Game.Screen.playScreen, 'You are not carrying anything.'),
+        'd':            Game.Commands.showItemScreenCommand.bind(this, Game.Screen.dropScreen, Game.Screen.playScreen, 'You have nothing to drop.'),
+        'e':            Game.Commands.showItemScreenCommand.bind(this, Game.Screen.eatScreen, Game.Screen.playScreen, 'You have nothing to eat.'),
+        'w':            Game.Commands.showItemScreenCommand.bind(this, Game.Screen.wieldScreen, Game.Screen.playScreen, 'You have nothing to wield.'),
+        'W':            Game.Commands.showItemScreenCommand.bind(this, Game.Screen.wearScreen, Game.Screen.playScreen, 'You have nothing to wear.'),
+        'x':            Game.Commands.showItemScreenCommand.bind(this, Game.Screen.examineScreen, Game.Screen.playScreen, 'You have nothing to examine.'),
+        't':            Game.Commands.showItemScreenCommand.bind(this, Game.Screen.throwScreen, Game.Screen.playScreen, 'You have nothing to throw.'),
         ',':            Game.Commands.nullCommand.bind(this), // Should potentially show a get screen
-        ';':            Game.Commands.showTargettingScreenCommand.bind(this, Game.Screen.lookScreen),
-        '?':            Game.Commands.showScreenCommand.bind(this, Game.Screen.helpScreen)
+        ';':            Game.Commands.showTargettingScreenCommand.bind(this, Game.Screen.lookScreen, Game.Screen.playScreen),
+        '?':            Game.Commands.showScreenCommand.bind(this, Game.Screen.helpScreen, Game.Screen.playScreen)
     }
 };
 
