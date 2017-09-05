@@ -61,8 +61,10 @@ Game.Entity.prototype.getMap = function() {
     return this._map;
 };
 Game.Entity.prototype.tryMove = function(x, y, z, map) {
+    // TODO: Account for existing entities on stair tiles when moving up and down
+    // TODO: clean this up
 	if(!map) {
-		var map = this.getMap();
+		map = this.getMap();
 	}
 	// Must use starting z
 	var tile = map.getTile(x, y, this.getZ());
@@ -74,13 +76,15 @@ Game.Entity.prototype.tryMove = function(x, y, z, map) {
 		} else {
 			Game.sendMessage(this, "You ascend to level %s!", [z + 1]);
 			this.setPosition(x, y, z);
+            return true;
 		}
 	} else if(z > this.getZ()) {
 		if (tile.describe() !== 'stairsDown') {
             Game.sendMessage(this, "You can't go down here!");
         } else {
-            this.setPosition(x, y, z);
             Game.sendMessage(this, "You descend to level %s!", [z + 1]);
+            this.setPosition(x, y, z);
+            return true;
         }
 	} else if(target) {
 		// An entity can only attack if the entity has the Attacker mixin and
@@ -105,7 +109,7 @@ Game.Entity.prototype.tryMove = function(x, y, z, map) {
             }
         }
 		return true;
-	} else if(tile.isDiggable()) {
+	} else if(tile.isDiggable()) { // TODO: get this logic into a mixin
 		// Only dig if the the entity is the player
         if (this.hasMixin(Game.EntityMixins.PlayerActor)) {
             map.dig(x, y, z);
@@ -115,7 +119,7 @@ Game.Entity.prototype.tryMove = function(x, y, z, map) {
         return false;
 	}
 	return false;
-}
+};
 Game.Entity.prototype.isAlive = function() {
     return this._alive;
 };

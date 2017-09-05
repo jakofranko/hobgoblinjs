@@ -36,5 +36,6 @@ Game.Input.handleInput = function(screen, inputType, inputData) {
     // Each keyMap object should contain a list of references to Commands with specific parameters
     // bound to them. These command functions will return a function that can be executed later,
     // by passing in a specific entity to the function returned from `handleInput`
+    // TODO: inputData.key is only good for key events. need a way to abstract out data depending on event type
     return Game.Input.controlMaps[screen][inputType][inputData.key]();
 };

@@ -119,7 +119,9 @@ function generateIndexHTML(jsFiles) {
 		"example-screens.js",
 		"example-tiles.js",
 		"example-items.js",
-		"example-entities.js"
+		"example-entities.js",
+		"commands.js",
+		"input.js"
 	];
 
 	var html = '<!DOCTYPE html>\n';
