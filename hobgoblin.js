@@ -28,7 +28,7 @@ program
 		// Copy over the main files
 		let contents = fs.readdirSync(srcDir);
 		let jsDir = fs.readdirSync('js');
-		let jsFiles;
+		let jsFiles = [];
 		for (var i = 0; i < contents.length; i++) {
 			if(jsDir.indexOf(contents[i]) > -1) {
 				console.log(chalk.blue(contents[i] + ' already exists. Skipping...'));
