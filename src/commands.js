@@ -54,6 +54,44 @@ Game.Commands.showItemScreenCommand = function(itemScreen, mainScreen, noItemsMe
     };
 };
 
+Game.Commands.ItemScreenExecuteOkCommand = function(mainScreen, key) {
+    return function() {
+        debugger;
+        var letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
+        var index = letters.indexOf(key.toLowerCase());
+        var subScreen = mainScreen.getSubScreen();
+
+        // If enter is pressed, execute the ok functions
+        if(key === "Enter")
+            return this.executeOkFunction();
+
+        // Do nothing if a letter isn't pressed
+        if(index === -1)
+            return false;
+
+        // If the 'no item' option is selected
+        if(subScreen._canSelectItem && subScreen._hasNoItemOption && key === "0") {
+            subScreen._selectedIndices = {};
+            return this.executeOkFunction();
+        }
+
+        if(subScreen._items[index]) {
+            // If multiple selection is allowed, toggle the selection status,
+            // else select the item and exit the screen
+            if(subScreen._canSelectMultipleItems) {
+                if(subScreen._selectedIndices[index])
+                    delete subScreen._selectedIndices[index];
+                else
+                    subScreen._selectedIndices[index] = true;
+
+            } else {
+                subScreen._selectedIndices[index] = true;
+                return this.executeOkFunction();
+            }
+        }
+    }
+}
+
 Game.Commands.showTargettingScreenCommand = function(targettingScreen, mainScreen) {
     return function(entity) {
         // Make sure the x-axis doesn't go above the top bound
@@ -67,6 +105,12 @@ Game.Commands.showTargettingScreenCommand = function(targettingScreen, mainScree
 
         targettingScreen.setup(entity, entity.getX(), entity.getY(), offsetX, offsetY);
         mainScreen.setSubScreen(targettingScreen);
+    };
+};
+
+Game.Commands.removeSubScreenCommand = function(mainScreen) {
+    return function() {
+        mainScreen.setSubScreen(undefined);
     };
 };
 
