@@ -31,11 +31,47 @@ Game.Input.controlMaps.playScreen = {
     }
 };
 
+Game.Input.controlMaps.ItemListScreen = {
+  keydown: {
+    'Escape': Game.Commands.removeSubScreenCommand.bind(this, Game.Screen.playScreen),
+    'Enter': Game.Commands.ItemScreenExecuteOkCommand.bind(this, Game.Screen.playScreen, 'Enter'),
+    "a": Game.Commands.ItemScreenExecuteOkCommand.bind(this, Game.Screen.playScreen, "a"),
+    "b": Game.Commands.ItemScreenExecuteOkCommand.bind(this, Game.Screen.playScreen, "b"),
+    "c": Game.Commands.ItemScreenExecuteOkCommand.bind(this, Game.Screen.playScreen, "c"),
+    "d": Game.Commands.ItemScreenExecuteOkCommand.bind(this, Game.Screen.playScreen, "d"),
+    "e": Game.Commands.ItemScreenExecuteOkCommand.bind(this, Game.Screen.playScreen, "e"),
+    "f": Game.Commands.ItemScreenExecuteOkCommand.bind(this, Game.Screen.playScreen, "f"),
+    "g": Game.Commands.ItemScreenExecuteOkCommand.bind(this, Game.Screen.playScreen, "g"),
+    "h": Game.Commands.ItemScreenExecuteOkCommand.bind(this, Game.Screen.playScreen, "h"),
+    "i": Game.Commands.ItemScreenExecuteOkCommand.bind(this, Game.Screen.playScreen, "i"),
+    "j": Game.Commands.ItemScreenExecuteOkCommand.bind(this, Game.Screen.playScreen, "j"),
+    "k": Game.Commands.ItemScreenExecuteOkCommand.bind(this, Game.Screen.playScreen, "k"),
+    "l": Game.Commands.ItemScreenExecuteOkCommand.bind(this, Game.Screen.playScreen, "l"),
+    "m": Game.Commands.ItemScreenExecuteOkCommand.bind(this, Game.Screen.playScreen, "m"),
+    "n": Game.Commands.ItemScreenExecuteOkCommand.bind(this, Game.Screen.playScreen, "n"),
+    "o": Game.Commands.ItemScreenExecuteOkCommand.bind(this, Game.Screen.playScreen, "o"),
+    "p": Game.Commands.ItemScreenExecuteOkCommand.bind(this, Game.Screen.playScreen, "p"),
+    "q": Game.Commands.ItemScreenExecuteOkCommand.bind(this, Game.Screen.playScreen, "q"),
+    "r": Game.Commands.ItemScreenExecuteOkCommand.bind(this, Game.Screen.playScreen, "r"),
+    "s": Game.Commands.ItemScreenExecuteOkCommand.bind(this, Game.Screen.playScreen, "s"),
+    "t": Game.Commands.ItemScreenExecuteOkCommand.bind(this, Game.Screen.playScreen, "t"),
+    "u": Game.Commands.ItemScreenExecuteOkCommand.bind(this, Game.Screen.playScreen, "u"),
+    "v": Game.Commands.ItemScreenExecuteOkCommand.bind(this, Game.Screen.playScreen, "v"),
+    "w": Game.Commands.ItemScreenExecuteOkCommand.bind(this, Game.Screen.playScreen, "w"),
+    "x": Game.Commands.ItemScreenExecuteOkCommand.bind(this, Game.Screen.playScreen, "x"),
+    "y": Game.Commands.ItemScreenExecuteOkCommand.bind(this, Game.Screen.playScreen, "y"),
+    "z": Game.Commands.ItemScreenExecuteOkCommand.bind(this, Game.Screen.playScreen, "z")
+  }
+}
+
 // This function is meant to handle input data of all types
 Game.Input.handleInput = function(screen, inputType, inputData) {
     // Each keyMap object should contain a list of references to Commands with specific parameters
     // bound to them. These command functions will return a function that can be executed later,
     // by passing in a specific entity to the function returned from `handleInput`
     // TODO: inputData.key is only good for key events. need a way to abstract out data depending on event type
-    return Game.Input.controlMaps[screen][inputType][inputData.key]();
+    if(inputData.key === "Shift" || inputData.key === "Control" || inputData.key === "Alt")
+        return Game.Commands.nullCommand();
+    else
+        return Game.Input.controlMaps[screen][inputType][inputData.key]();
 };
