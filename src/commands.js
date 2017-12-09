@@ -68,17 +68,17 @@ Game.Commands.ItemScreenExecuteOkCommand = function(mainScreen, key) {
 
         // If enter is pressed, execute the ok functions
         if(key === "Enter")
-            return this.executeOkFunction();
-
-        // Do nothing if a letter isn't pressed
-        if(index === -1)
-            return false;
+            return subScreen.executeOkFunction();
 
         // If the 'no item' option is selected
         if(subScreen._canSelectItem && subScreen._hasNoItemOption && key === "0") {
             subScreen._selectedIndices = {};
-            return this.executeOkFunction();
+            return subScreen.executeOkFunction();
         }
+
+        // Do nothing if a letter isn't pressed
+        if(index === -1)
+            return false;
 
         if(subScreen._items[index]) {
             // If multiple selection is allowed, toggle the selection status,
@@ -91,7 +91,7 @@ Game.Commands.ItemScreenExecuteOkCommand = function(mainScreen, key) {
 
             } else {
                 subScreen._selectedIndices[index] = true;
-                return this.executeOkFunction();
+                return subScreen.executeOkFunction();
             }
         }
     }
