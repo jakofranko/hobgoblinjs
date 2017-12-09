@@ -42,6 +42,7 @@ Game.Commands.showScreenCommand = function(screen, mainScreen) {
 Game.Commands.showItemScreenCommand = function(itemScreen, mainScreen, noItemsMessage, getItems) {
     debugger;
     return function(entity) {
+        debugger;
         // Items screens' setup method will always return the number of items they will display.
         // This can be used to determine a prompt if no items will display in the menu
         if(!itemScreen.setup)
