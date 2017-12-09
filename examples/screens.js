@@ -307,7 +307,7 @@ Game.Screen.playScreen = new Game.Screen.basicScreen({
         this._gameEnded = gameEnded;
     },
     getSubScreen: function() {
-        return this._subScree;
+        return this._subScreen;
     },
     setSubScreen: function(subScreen) {
         this._subScreen = subScreen;
