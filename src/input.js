@@ -25,7 +25,9 @@ Game.Input.controlMaps.playScreen = {
         'W':            Game.Commands.showItemScreenCommand.bind(this, Game.Screen.wearScreen, Game.Screen.playScreen, 'You have nothing to wear.'),
         'x':            Game.Commands.showItemScreenCommand.bind(this, Game.Screen.examineScreen, Game.Screen.playScreen, 'You have nothing to examine.'),
         't':            Game.Commands.showItemScreenCommand.bind(this, Game.Screen.throwScreen, Game.Screen.playScreen, 'You have nothing to throw.'),
-        ',':            Game.Commands.nullCommand.bind(this), // Should potentially show a get screen
+        ',':            Game.Commands.showItemScreenCommand.bind(this, Game.Screen.pickupScreen, Game.Screen.playScreen, 'There is nothing here to pick up.',  function(entity) {
+            return entity.getMap().getItemsAt(entity.getX(), entity.getY(), entity.getZ());
+        }),
         ';':            Game.Commands.showTargettingScreenCommand.bind(this, Game.Screen.lookScreen, Game.Screen.playScreen),
         '?':            Game.Commands.showScreenCommand.bind(this, Game.Screen.helpScreen, Game.Screen.playScreen)
     }
@@ -35,6 +37,7 @@ Game.Input.controlMaps.ItemListScreen = {
   keydown: {
     'Escape': Game.Commands.removeSubScreenCommand.bind(this, Game.Screen.playScreen),
     'Enter': Game.Commands.ItemScreenExecuteOkCommand.bind(this, Game.Screen.playScreen, 'Enter'),
+    '0': Game.Commands.ItemScreenExecuteOkCommand.bind(this, Game.Screen.playScreen, "0"),
     "a": Game.Commands.ItemScreenExecuteOkCommand.bind(this, Game.Screen.playScreen, "a"),
     "b": Game.Commands.ItemScreenExecuteOkCommand.bind(this, Game.Screen.playScreen, "b"),
     "c": Game.Commands.ItemScreenExecuteOkCommand.bind(this, Game.Screen.playScreen, "c"),
@@ -70,8 +73,9 @@ Game.Input.handleInput = function(screen, inputType, inputData) {
     // bound to them. These command functions will return a function that can be executed later,
     // by passing in a specific entity to the function returned from `handleInput`
     // TODO: inputData.key is only good for key events. need a way to abstract out data depending on event type
-    if(inputData.key === "Shift" || inputData.key === "Control" || inputData.key === "Alt")
-        return Game.Commands.nullCommand();
-    else
+    if(Game.Input.controlMaps[screen][inputType][inputData.key])
         return Game.Input.controlMaps[screen][inputType][inputData.key]();
+    else {
+        return Game.Commands.nullCommand();
+    }
 };
