@@ -105,7 +105,6 @@ Game.Screen.ItemListScreen.prototype.executeOkFunction = function() {
     return this._okFunction ? this._okFunction(selectedItems) : false;
 };
 Game.Screen.ItemListScreen.prototype.handleInput = function(inputType, inputData) {
-    debugger;
     var command = Game.Input.handleInput("ItemListScreen", inputType, inputData);
 
     // Execute the command, and caputure return value
