@@ -167,8 +167,7 @@ Game.Screen.TargetBasedScreen = function(template) {
 };
 Game.Screen.TargetBasedScreen.prototype.setup = function(player, startX, startY, offsetX, offsetY) {
     this._player = player;
-    // Store original position. Subtract the offset to make life easy so we don't
-    // always have to remove it.
+    // Store original position. Subtract the offset so we don't always have to remove it.
     this._startX = startX - offsetX;
     this._startY = startY - offsetY;
     // Store current cursor position
