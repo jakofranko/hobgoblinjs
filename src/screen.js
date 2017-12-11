@@ -102,7 +102,7 @@ Game.Screen.ItemListScreen.prototype.executeOkFunction = function() {
     Game.Screen.playScreen.setSubScreen(undefined);
 
     // Return the result of the okFunction
-    return this._okFunction(selectedItems);
+    return this._okFunction ? this._okFunction(selectedItems) : false;
 };
 Game.Screen.ItemListScreen.prototype.handleInput = function(inputType, inputData) {
     debugger;
