@@ -40,9 +40,7 @@ Game.Commands.showScreenCommand = function(screen, mainScreen) {
 };
 
 Game.Commands.showItemScreenCommand = function(itemScreen, mainScreen, noItemsMessage, getItems) {
-    debugger;
     return function(entity) {
-        debugger;
         // Items screens' setup method will always return the number of items they will display.
         // This can be used to determine a prompt if no items will display in the menu
         if(!itemScreen.setup)
@@ -62,7 +60,6 @@ Game.Commands.showItemScreenCommand = function(itemScreen, mainScreen, noItemsMe
 
 Game.Commands.ItemScreenExecuteOkCommand = function(mainScreen, key) {
     return function() {
-        debugger;
         var letters = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
         var index = letters.indexOf(key.toLowerCase());
         var subScreen = mainScreen.getSubScreen();
