@@ -108,7 +108,7 @@ Game.Screen.ItemListScreen.prototype.handleInput = function(inputType, inputData
     var command = Game.Input.handleInput("ItemListScreen", inputType, inputData);
 
     // Execute the command, and caputure return value
-    var unlock = command ? command() : true;
+    var unlock = command ? command() : false;
 
     // If the return value is true, unlock the engine (player turn over)
     if(unlock)
