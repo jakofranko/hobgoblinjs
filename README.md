@@ -123,7 +123,7 @@ Note: the engine is actually started by `Game.screen.playScreen.enter()`.
 
 ### `Game.Glyph` and `Game.DynamicGlyph` -- Tiles, Entities, and Items
 
-`Game.Glyph` is the most basic unit in Hobgoblin. It consists of a name, a character, colors, and a little bit of logic for how to display it. 
+`Game.Glyph` is the most basic unit in Hobgoblin. It consists of a name, a character, colors, and a little bit of logic for how to display it.
 
 `Game.Tile` uses `Game.Glyph` as its constructor, and implements some basic logic about whether or not a tile can be seen through or walked upon.
 
@@ -161,10 +161,8 @@ I would also love for you to add in your own code under the `examples/` folder. 
 
 ## TODOs
 
-* Clean up `Game.Screen` namespace to only include prototypes, with `Game.Screens` containing implementations of screens
 * Add option to install ROT.js via Bower
 * Update example directory to include latest examples
-* Publish to npm
 * Update to use require, cleanup index.html
 * Themed example sets, with the ability to override src files where appropriate: sci-fi, high-fantasy, traditional, 7drl, etc.
 * Refactor controls
