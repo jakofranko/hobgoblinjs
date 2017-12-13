@@ -502,10 +502,11 @@ Game.Screen.lookScreen = new Game.Screen.TargetBasedScreen({
                 map.getTile(x, y, z).getDescription());
 
         } else {
+            var nullTile = Game.TileRepository.create('null');
             // If the tile is not explored, show the null tile description.
             return String.format('%s - %s',
-                Game.Tile.nullTile.getRepresentation(),
-                Game.Tile.nullTile.getDescription());
+                nullTile.getRepresentation(),
+                nullTile.getDescription());
         }
     }
 });
