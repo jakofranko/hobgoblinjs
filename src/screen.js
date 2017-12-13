@@ -207,23 +207,14 @@ Game.Screen.TargetBasedScreen.prototype.render = function(display) {
         this._captionFunction(this._cursorX + this._offsetX, this._cursorY + this._offsetY));
 };
 Game.Screen.TargetBasedScreen.prototype.handleInput = function(inputType, inputData) {
-    // Move the cursor
-    if (inputType == 'keydown') {
-        if (inputData.keyCode === ROT.VK_LEFT) {
-            this.moveCursor(-1, 0);
-        } else if (inputData.keyCode === ROT.VK_RIGHT) {
-            this.moveCursor(1, 0);
-        } else if (inputData.keyCode === ROT.VK_UP) {
-            this.moveCursor(0, -1);
-        } else if (inputData.keyCode === ROT.VK_DOWN) {
-            this.moveCursor(0, 1);
-        } else if (inputData.keyCode === ROT.VK_ESCAPE) {
-            Game.Screen.playScreen.setSubScreen(undefined);
-        } else if (inputData.keyCode === ROT.VK_RETURN) {
-            this.executeOkFunction();
-        }
-    }
-    Game.refresh();
+    var command = Game.Input.handleInput("TargetBasedScreen", inputType, inputData);
+    var unlock = command ? command() : false;
+
+    // If the return value is true, unlock the engine (player turn over)
+    if(unlock)
+        this._player.getMap().getEngine().unlock();
+    else
+        Game.refresh();
 };
 Game.Screen.TargetBasedScreen.prototype.moveCursor = function(dx, dy) {
     // Make sure we stay within bounds.
@@ -232,12 +223,10 @@ Game.Screen.TargetBasedScreen.prototype.moveCursor = function(dx, dy) {
     this._cursorY = Math.max(0, Math.min(this._cursorY + dy, Game.getScreenHeight() - 1));
 };
 Game.Screen.TargetBasedScreen.prototype.executeOkFunction = function() {
-    // Switch back to the play screen.
-    Game.Screen.playScreen.setSubScreen(undefined);
-    // Call the OK function and end the player's turn if it return true.
-    if (this._okFunction && this._okFunction(this._cursorX + this._offsetX, this._cursorY + this._offsetY)) {
-        this._player.getMap().getEngine().unlock();
-    }
+    if(this._okFunction)
+        return this._okFunction(this._cursorX + this._offsetX, this._cursorY + this._offsetY);
+    else
+        return false;
 };
 
 // Menu screens
