@@ -65,7 +65,18 @@ Game.Input.controlMaps.ItemListScreen = {
     "y": Game.Commands.ItemScreenExecuteOkCommand.bind(this, Game.Screen.playScreen, "y"),
     "z": Game.Commands.ItemScreenExecuteOkCommand.bind(this, Game.Screen.playScreen, "z")
   }
-}
+};
+
+Game.Input.controlMaps.TargetBasedScreen = {
+    keydown: {
+        "ArrowRight": Game.Commands.moveCursorCommand.bind(this, Game.Screen.playScreen, 1, 0),
+        "ArrowLeft": Game.Commands.moveCursorCommand.bind(this, Game.Screen.playScreen, -1, 0),
+        "ArrowUp": Game.Commands.moveCursorCommand.bind(this, Game.Screen.playScreen, 0, -1),
+        "ArrowDown": Game.Commands.moveCursorCommand.bind(this, Game.Screen.playScreen, 0, 1),
+        "Enter": Game.Commands.TargetBasedScreenOkCommand.bind(this, Game.Screen.playScreen),
+        "Escape": Game.Commands.removeSubScreenCommand.bind(this, Game.Screen.playScreen)
+    }
+};
 
 // This function is meant to handle input data of all types
 Game.Input.handleInput = function(screen, inputType, inputData) {
