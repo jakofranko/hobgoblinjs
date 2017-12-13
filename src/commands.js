@@ -111,6 +111,19 @@ Game.Commands.showTargettingScreenCommand = function(targettingScreen, mainScree
     };
 };
 
+// Does not end player turn, so don't return
+Game.Commands.moveCursorCommand = function(mainScreen, offsetX, offsetY) {
+        return function() {
+            mainScreen.getSubScreen().moveCursor(offsetX, offsetY);
+        }
+};
+
+Game.Commands.TargetBasedScreenOkCommand = function(mainScreen) {
+    return function() {
+        return mainScreen.getSubScreen().executeOkFunction();
+    }
+}
+
 Game.Commands.removeSubScreenCommand = function(mainScreen) {
     return function() {
         mainScreen.setSubScreen(undefined);
