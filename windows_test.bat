@@ -13,3 +13,4 @@ cd test
 node ..\hobgoblin.js init -e
 index.html
 cd ..
+PAUSE
