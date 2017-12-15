@@ -78,6 +78,16 @@ Game.Input.controlMaps.TargetBasedScreen = {
     }
 };
 
+Game.Input.controlMaps.MenuScreen = {
+    keydown: {
+        "ArrowUp": Game.Commands.moveMenuIndexCommand.bind(this, Game.Screen.playScreen, -1),
+        "ArrowDown": Game.Commands.moveMenuIndexCommand.bind(this, Game.Screen.playScreen, 1),
+        "Enter": Game.Commands.MenuScreenOkCommand.bind(this, Game.Screen.playScreen),
+        " ": Game.Commands.MenuScreenOkCommand.bind(this, Game.Screen.playScreen),
+        "Escape": Game.Commands.removeSubScreenCommand.bind(this, Game.Screen.playScreen)
+    }
+}
+
 // This function is meant to handle input data of all types
 Game.Input.handleInput = function(screen, inputType, inputData) {
     // Each keyMap object should contain a list of references to Commands with specific parameters
