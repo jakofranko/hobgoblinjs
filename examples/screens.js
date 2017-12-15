@@ -655,7 +655,7 @@ Game.Screen.gainStatScreen = new Game.Screen.basicScreen({
 
 // Define our winning screen
 Game.Screen.winScreen = new Game.Screen.basicScreen({
-    enter: function() {    console.log("Entered win screen."); },
+    enter: function() { console.log("Entered win screen."); },
     exit: function() { console.log("Exited win screen."); },
     render: function(display) {
         // Render our prompt to the screen
