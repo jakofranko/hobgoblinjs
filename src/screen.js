@@ -328,24 +328,21 @@ Game.Screen.MenuScreen.prototype.render = function(display) {
     }
 };
 Game.Screen.MenuScreen.prototype.handleInput = function(inputType, inputData) {
-    // Move the cursor
-    if(inputType == 'keydown') {
-        if(inputData.keyCode === ROT.VK_UP && this._currentIndex > 0)
-            this._currentIndex--;
-        else if(inputData.keyCode === ROT.VK_DOWN && this._currentIndex < this._menuItems.length - 1)
-            this._currentIndex++;
-        else if(inputData.keyCode === ROT.VK_ESCAPE)
-            Game.Screen.playScreen.setSubScreen(undefined);
-        else if(inputData.keyCode === ROT.VK_RETURN)
-            this.executeOkFunction();
-    }
-    Game.refresh();
+    var command = Game.Input.handleInput("MenuScreen", inputType, inputData);
+    var unlock = command ? command() : false;
+
+    // If the return value is true, unlock the engine (player turn over)
+    if(unlock)
+        this._player.getMap().getEngine().unlock();
+    else
+        Game.refresh();
 };
 Game.Screen.MenuScreen.prototype.executeOkFunction = function() {
-    // Switch back to the play screen.
-    Game.Screen.playScreen.setSubScreen(undefined);
-    // Call the OK function and end the player's turn if it return true.
-    if (this._okFunction && this._okFunction()) {
-        this._player.getMap().getEngine().unlock();
-    }
+    if(this._okFunction)
+        return this._okFunction();
+    else
+        return false;
 };
+Game.Screen.MenuScreen.prototype.moveMenuIndex = function(amount) {
+    this._currentIndex += amount;
+}
