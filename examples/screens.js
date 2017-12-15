@@ -195,13 +195,10 @@ Game.Screen.playScreen = new Game.Screen.basicScreen({
             return;
         }
 
-        var command = Game.Input.handleInput('playScreen', inputType, inputData),
-            unlock;
+        var command = Game.Input.handleInput('playScreen', inputType, inputData);
+        var unlock = command ? command(this._player) : false;
 
-        if(command)
-            unlock = command(this._player);
-
-        if(unlock || !command)
+        if(unlock)
             this._player.getMap().getEngine().unlock();
         else
             Game.refresh();
