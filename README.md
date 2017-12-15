@@ -165,7 +165,6 @@ I would also love for you to add in your own code under the `examples/` folder. 
 * Update example directory to include latest examples
 * Update to use require, cleanup index.html
 * Themed example sets, with the ability to override src files where appropriate: sci-fi, high-fantasy, traditional, 7drl, etc.
-* Refactor controls
 * Bring over templating system from Justice
 * Bring over equipment system from Monster Hunter RL?
 * Add in random item generation.
