@@ -124,6 +124,20 @@ Game.Commands.TargetBasedScreenOkCommand = function(mainScreen) {
     }
 }
 
+Game.Commands.moveMenuIndexCommand = function(mainScreen, amount) {
+    return function() {
+        var subScreen = mainScreen.getSubScreen();
+        subScreen.moveMenuIndex(amount);
+    }
+}
+
+Game.Commands.MenuScreenOkCommand = function(mainScreen) {
+    return function() {
+        var subScreen = mainScreen.getSubScreen();
+        return subScreen.executeOkFunction();
+    }
+}
+
 Game.Commands.removeSubScreenCommand = function(mainScreen) {
     return function() {
         mainScreen.setSubScreen(undefined);
