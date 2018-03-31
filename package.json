@@ -1,6 +1,6 @@
 {
   "name": "hobgoblin",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "A framework for writing roguelike games in JavaScript, implementing ROT.js",
   "main": "hobgoblin.js",
   "bin": {
